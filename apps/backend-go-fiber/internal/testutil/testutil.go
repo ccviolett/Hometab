@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"hometab/internal/autostart"
 	"hometab/internal/handler"
 	"hometab/internal/model"
 	"hometab/internal/repository"
@@ -60,6 +61,7 @@ func SetupTestApp() (*fiber.App, *gorm.DB) {
 	externalRequestSvc := service.NewExternalRequestSvc(externalRequestRepo)
 	domainIconSvc := service.NewDomainIconSvc(domainIconRepo, iconDir)
 	dataSvc := service.NewDataSvc(db, iconDir)
+	startupManager := autostart.New()
 
 	handlers := &router.Handlers{
 		Link:            handler.NewLinkHandler(linkSvc),
@@ -70,6 +72,7 @@ func SetupTestApp() (*fiber.App, *gorm.DB) {
 		ExternalRequest: handler.NewExternalRequestHandler(externalRequestSvc),
 		DomainIcon:      handler.NewDomainIconHandler(domainIconSvc, linkSvc),
 		Data:            handler.NewDataHandler(dataSvc),
+		System:          handler.NewSystemHandler(startupManager),
 	}
 
 	buildinfo.Version = "test"

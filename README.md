@@ -61,6 +61,10 @@ Existing installations under the previous `Home` directory are detected automati
 
 ## macOS Background Service
 
+On macOS, open **Settings > Login startup** to register or remove Hometab for
+the next user login. The current process keeps running when login startup is
+disabled. The same lifecycle operations remain available from the CLI:
+
 ```bash
 ./apps/backend-go-fiber/bin/hometab --install
 ./apps/backend-go-fiber/bin/hometab --status
@@ -99,6 +103,7 @@ Saved-request execution is disabled by default when the server binds to a non-lo
 
 - [Architecture](./docs/ARCHITECTURE.md)
 - [Development](./docs/DEVELOPMENT.md)
+- [Login startup](./docs/AUTOSTART.md)
 - [Contributing](./CONTRIBUTING.md)
 - [Security](./SECURITY.md)
 - [Changelog](./CHANGELOG.md)

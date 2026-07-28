@@ -16,6 +16,7 @@ type Handlers struct {
 	ExternalRequest *handler.ExternalRequestHandler
 	DomainIcon      *handler.DomainIconHandler
 	Data            *handler.DataHandler
+	System          *handler.SystemHandler
 }
 
 func Setup(app *fiber.App, h *Handlers) {
@@ -90,6 +91,10 @@ func Setup(app *fiber.App, h *Handlers) {
 	api.Post("/settings", h.Setting.CreateOrUpdate)
 	api.Put("/settings/:key", h.Setting.Update)
 	api.Delete("/settings/:key", h.Setting.Delete)
+
+	// Machine-local system settings
+	api.Get("/system/startup", h.System.StartupStatus)
+	api.Put("/system/startup", h.System.ConfigureStartup)
 
 	// Data Management
 	api.Get("/export", h.Data.Export)

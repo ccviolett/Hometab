@@ -2,6 +2,11 @@
 
 Hometab follows Semantic Versioning. Release tags use `vX.Y.Z`.
 
+## [Unreleased]
+
+- Add macOS login startup controls to the embedded settings UI.
+- Share LaunchAgent lifecycle logic between the local API and CLI.
+
 ## [1.0.0]
 
 Initial public release.

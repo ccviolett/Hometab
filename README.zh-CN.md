@@ -61,6 +61,9 @@ http://127.0.0.1:52173
 
 ## macOS 后台服务
 
+在 macOS 中，可以通过 **设置 → 登录启动** 注册或取消 Hometab 的下次登录启动。
+取消后当前进程会继续运行。相同的生命周期操作也可以通过 CLI 完成：
+
 ```bash
 ./apps/backend-go-fiber/bin/hometab --install
 ./apps/backend-go-fiber/bin/hometab --status
@@ -99,6 +102,7 @@ Hometab 是无内置认证的可信单用户应用。请保持默认的本机监
 
 - [架构](./docs/ARCHITECTURE.md)
 - [开发指南](./docs/DEVELOPMENT.md)
+- [登录启动](./docs/AUTOSTART.md)
 - [贡献指南](./CONTRIBUTING.md)
 - [安全策略](./SECURITY.md)
 - [变更记录](./CHANGELOG.md)

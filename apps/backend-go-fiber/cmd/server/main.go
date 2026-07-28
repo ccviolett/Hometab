@@ -13,6 +13,7 @@ import (
 	"syscall"
 	"time"
 
+	"hometab/internal/autostart"
 	"hometab/internal/config"
 	"hometab/internal/database"
 	"hometab/internal/frontend"
@@ -87,6 +88,7 @@ func main() {
 	iconDir := service.DefaultIconDir(cfg.Database.Path)
 	domainIconSvc := service.NewDomainIconSvc(domainIconRepo, iconDir)
 	dataSvc := service.NewDataSvc(db, iconDir)
+	startupManager := autostart.New()
 
 	// Handlers
 	handlers := &router.Handlers{
@@ -98,6 +100,7 @@ func main() {
 		ExternalRequest: handler.NewExternalRequestHandler(externalRequestSvc),
 		DomainIcon:      handler.NewDomainIconHandler(domainIconSvc, linkSvc),
 		Data:            handler.NewDataHandler(dataSvc),
+		System:          handler.NewSystemHandler(startupManager),
 	}
 
 	app := fiber.New(fiber.Config{

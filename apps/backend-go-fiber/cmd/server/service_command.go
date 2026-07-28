@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"hometab/internal/autostart"
 )
 
 type serviceCommandFlags struct {
@@ -11,6 +13,38 @@ type serviceCommandFlags struct {
 	Start     bool
 	Stop      bool
 	Status    bool
+}
+
+func runServiceCommand(action string) error {
+	manager := autostart.New()
+	var err error
+	switch action {
+	case "install":
+		err = manager.Install()
+	case "uninstall":
+		err = manager.Uninstall()
+	case "start":
+		err = manager.Start()
+	case "stop":
+		err = manager.Stop()
+	case "status":
+		// Status is printed below.
+	default:
+		return fmt.Errorf("unsupported service command: %s", action)
+	}
+	if err != nil {
+		return err
+	}
+
+	status, err := manager.Status()
+	if err != nil {
+		return err
+	}
+	fmt.Printf("Platform: %s\n", status.Platform)
+	fmt.Printf("Supported: %t\n", status.Supported)
+	fmt.Printf("Login startup enabled: %t\n", status.Enabled)
+	fmt.Printf("Service active: %t\n", status.Active)
+	return nil
 }
 
 func handleServiceCommand(flags serviceCommandFlags) bool {
