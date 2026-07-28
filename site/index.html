@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Hometab is a local-first personal start page delivered as a single executable." />
+    <meta name="theme-color" content="#111827" />
+    <meta property="og:title" content="Hometab" />
+    <meta property="og:description" content="A local-first personal start page delivered as a single executable." />
+    <meta property="og:image" content="https://ccviolett.github.io/Hometab/assets/hometab-demo.png" />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="https://ccviolett.github.io/Hometab/" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="i18n.js" defer></script>
+    <title>Hometab - Your web, organized locally</title>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="topbar">
+        <nav class="nav" aria-label="Primary navigation" data-i18n-aria-label="nav.ariaLabel">
+          <a class="brand" href="#top">Hometab</a>
+          <div class="nav-links">
+            <a href="#capabilities" data-i18n="nav.capabilities">Capabilities</a>
+            <a href="#delivery" data-i18n="nav.delivery">Delivery</a>
+            <a class="github-link" href="https://github.com/ccviolett/Hometab">GitHub</a>
+            <div class="language-switch" role="group" aria-label="Language" data-i18n-aria-label="language.ariaLabel">
+              <button type="button" data-language="en" aria-pressed="true">EN</button>
+              <button type="button" data-language="zh-CN" aria-pressed="false">中文</button>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <div class="hero-content" id="top">
+        <p class="eyebrow" data-i18n="hero.eyebrow">Local-first personal start page</p>
+        <h1>Hometab</h1>
+        <p class="hero-copy" data-i18n="hero.copy">
+          Your links, search engines, saved requests, and visual workspace in one private application.
+          One executable, one local database, no account required.
+        </p>
+        <div class="actions">
+          <a class="button button-primary" href="https://github.com/ccviolett/Hometab/releases" data-i18n="hero.download">Download</a>
+          <a class="button button-secondary" href="https://github.com/ccviolett/Hometab" data-i18n="hero.source">View source</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section capabilities" id="capabilities">
+        <div class="section-heading">
+          <p class="eyebrow dark" data-i18n="capabilities.eyebrow">Built for everyday browsing</p>
+          <h2 data-i18n="capabilities.title">A calmer home for the web.</h2>
+          <p data-i18n="capabilities.copy">Fast to open, easy to move, and entirely yours.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature feature-blue">
+            <p class="feature-index">01</p>
+            <h3 data-i18n="feature.organize.title">Organize naturally</h3>
+            <p data-i18n="feature.organize.copy">Group links, create reusable flows, and reorder everything around the way you work.</p>
+          </article>
+          <article class="feature feature-green">
+            <p class="feature-index">02</p>
+            <h3 data-i18n="feature.search.title">Search your way</h3>
+            <p data-i18n="feature.search.copy">Switch between built-in and custom search engines without leaving your starting point.</p>
+          </article>
+          <article class="feature feature-coral">
+            <p class="feature-index">03</p>
+            <h3 data-i18n="feature.local.title">Keep data local</h3>
+            <p data-i18n="feature.local.copy">Store everything in a local SQLite database with versioned export, import, and restore tools.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="product-band" aria-label="Hometab application preview" data-i18n-aria-label="product.ariaLabel">
+        <div class="product-copy">
+          <p class="eyebrow" data-i18n="product.eyebrow">The actual application</p>
+          <h2 data-i18n="product.title">One interface from focused search to full dashboard.</h2>
+        </div>
+        <img src="assets/hometab-demo.png" alt="Hometab dashboard showing grouped links and search" data-i18n-alt="product.imageAlt" />
+      </section>
+
+      <section class="section delivery" id="delivery">
+        <div class="section-heading compact">
+          <p class="eyebrow dark" data-i18n="delivery.eyebrow">Delivery</p>
+          <h2 data-i18n="delivery.title">Start with one file.</h2>
+          <p data-i18n="delivery.copy">Run Hometab directly. It selects an available local port and opens the right page automatically.</p>
+        </div>
+
+        <div class="delivery-list">
+          <div class="delivery-row">
+            <strong data-i18n="delivery.binary.title">Single executable</strong>
+            <span class="status ready" data-i18n="delivery.available">Available</span>
+            <span data-i18n="delivery.binary.copy">macOS, Linux, and Windows builds</span>
+          </div>
+          <div class="delivery-row">
+            <strong data-i18n="delivery.macos.title">macOS menu bar</strong>
+            <span class="status planned" data-i18n="delivery.planned">Planned</span>
+            <span data-i18n="delivery.macos.copy">Native status and lifecycle controls</span>
+          </div>
+          <div class="delivery-row">
+            <strong data-i18n="delivery.windows.title">Windows desktop app</strong>
+            <span class="status planned" data-i18n="delivery.planned">Planned</span>
+            <span data-i18n="delivery.windows.copy">Native background and window experience</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <strong>Hometab</strong>
+      <span data-i18n="footer.copy">Local-first. Open source. MIT licensed.</span>
+      <a href="https://github.com/ccviolett/Hometab">github.com/ccviolett/Hometab</a>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+server:
+  port: 52173
+  host: "127.0.0.1"
+
+external_requests:
+  # Required when binding Hometab to a non-loopback address and executing saved requests.
+  allow_remote_execution: false
+
+database:
+  # Optional. Leave empty to use the OS user config directory:
+  # macOS: ~/Library/Application Support/Hometab/data.db
+  # Linux: ~/.config/Hometab/data.db
+  # Windows: %AppData%\Hometab\data.db
+  path: ""
+
+log:
+  level: "info"
+  pretty: true

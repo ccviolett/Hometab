@@ -1,0 +1,52 @@
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === Node / Frontend ===
+node_modules/
+dist/
+dist-ssr/
+*.tsbuildinfo
+*.local
+npm-debug.log*
+
+# === Go / Backend ===
+apps/backend-go-fiber/bin/
+apps/backend-go-fiber/home-api
+*.exe
+
+# === Database (runtime) ===
+*.db
+*.db-shm
+*.db-wal
+
+# === Icon cache (runtime) ===
+apps/backend-go-fiber/icon_cache/
+
+# === Environment ===
+.env
+.env.*
+
+# === Logs ===
+*.log
+
+# === Temp / Backup ===
+*.tmp
+*.temp
+backups/
+
+# === Internal / Agent dirs (never commit) ===
+.claude/
+.workbuddy/
+
+# === Icon cache (runtime; cookies.json may hold session cookies) ===
+apps/backend-go-fiber/icon_cache/cookies.json
+
+# === Local README preview (rendered, not source) ===
+docs/preview/

@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/frontend-react-vite/package-lock.json
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: apps/backend-go-fiber/go.mod
+          cache-dependency-path: apps/backend-go-fiber/go.sum
+
+      - name: Check frontend
+        working-directory: apps/frontend-react-vite
+        run: |
+          npm ci --no-audit
+          npm run lint
+          npm test
+          npm run build
+
+      - name: Embed frontend
+        run: |
+          rm -rf apps/backend-go-fiber/internal/frontend/dist
+          mkdir -p apps/backend-go-fiber/internal/frontend/dist
+          cp -R apps/frontend-react-vite/dist/. apps/backend-go-fiber/internal/frontend/dist/
+
+      - name: Check backend
+        working-directory: apps/backend-go-fiber
+        run: |
+          test -z "$(gofmt -l .)"
+          go vet ./...
+          go test -race ./...
+          go build ./...

@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/frontend-react-vite/package-lock.json
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: apps/backend-go-fiber/go.mod
+          cache-dependency-path: apps/backend-go-fiber/go.sum
+
+      - name: Build frontend
+        working-directory: apps/frontend-react-vite
+        run: |
+          npm ci --no-audit
+          npm run build
+
+      - name: Embed frontend
+        run: |
+          rm -rf apps/backend-go-fiber/internal/frontend/dist
+          mkdir -p apps/backend-go-fiber/internal/frontend/dist
+          cp -R apps/frontend-react-vite/dist/. apps/backend-go-fiber/internal/frontend/dist/
+
+      - name: Build release archives
+        working-directory: apps/backend-go-fiber
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          mkdir -p ../../dist
+          BUILD_TIME="$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          LDFLAGS="-s -w -X 'hometab/pkg/buildinfo.Version=${VERSION}' -X 'hometab/pkg/buildinfo.BuildTime=${BUILD_TIME}'"
+
+          GOOS=darwin GOARCH=arm64 go build -trimpath -ldflags="$LDFLAGS" -o ../../dist/hometab-darwin-arm64 ./cmd/server/
+          GOOS=darwin GOARCH=amd64 go build -trimpath -ldflags="$LDFLAGS" -o ../../dist/hometab-darwin-amd64 ./cmd/server/
+          GOOS=linux GOARCH=arm64 go build -trimpath -ldflags="$LDFLAGS" -o ../../dist/hometab-linux-arm64 ./cmd/server/
+          GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="$LDFLAGS" -o ../../dist/hometab-linux-amd64 ./cmd/server/
+          GOOS=windows GOARCH=amd64 go build -trimpath -ldflags="$LDFLAGS" -o ../../dist/hometab-windows-amd64.exe ./cmd/server/
+
+          cd ../../dist
+          for file in hometab-darwin-* hometab-linux-*; do
+            tar -czf "${file}.tar.gz" "$file"
+            rm "$file"
+          done
+          zip hometab-windows-amd64.zip hometab-windows-amd64.exe
+          rm hometab-windows-amd64.exe
+          sha256sum hometab-* > checksums.txt
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --generate-notes --verify-tag
